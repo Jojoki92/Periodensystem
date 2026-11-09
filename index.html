@@ -256,6 +256,260 @@ footer{padding-block:20px 36px; color:var(--muted); font-size:13px; display:flex
   .card{padding:28px 16px; min-height:380px} .sp-top{grid-template-columns:minmax(0,1fr)} .timer{text-align:left}
   .opts{grid-template-columns:minmax(0,1fr)}
 }
+
+/* ===== Handy-Layout =====
+   Hochformat: Kopfzeile, eine Ansicht ohne Seiten-Scroll, Tab-Leiste unten.
+   Querformat: Leiste links (Lernstand + Tabs), Ansicht füllt den Rest. */
+.short,.ti,.resetMini,.mnav{display:none}
+.board{--bh:44px; --bgap:10px}
+.merk{position:relative}
+button,a,input,select{touch-action:manipulation}
+@media (hover:none){ .opt kbd{display:none} }
+
+@media (orientation:portrait) and (max-width:700px), (orientation:landscape) and (max-height:520px), (orientation:landscape) and (max-width:700px){
+  html,body{height:100%}
+  html{overscroll-behavior:none}
+  body{overflow:hidden; display:grid; font-size:14px}
+  .full{display:none} .short{display:inline}
+  .mini,.brand p,.logo .nm,.path,footer,.tbl-bar .lbl,.view-head > div:first-child{display:none}
+
+  /* Kopf */
+  .top-in{padding-block:6px; gap:10px; flex-wrap:nowrap}
+  .brand{gap:8px}
+  .logo{width:30px; height:34px; padding:3px 4px; border-radius:6px}
+  .logo .z{font-size:6.5px} .logo .s{font-size:15px}
+  .brand h1{font-size:18px}
+  .prog{gap:10px; width:auto}
+  .prog-nums{gap:10px; font-size:10px; line-height:1.3}
+  .prog-nums b{font-size:15px}
+  .resetMini{display:inline-flex; appearance:none; align-items:center; justify-content:center; height:30px; min-width:30px; padding:0 8px; border:1px solid var(--line); border-radius:8px; background:var(--surface); color:var(--muted); font:600 15px/1 var(--body); cursor:pointer; white-space:nowrap}
+  .resetMini.danger{color:var(--bad); border-color:var(--bad); font-size:12px}
+
+  /* Navigation */
+  .tabs{position:static; backdrop-filter:none; background:var(--surface); border-bottom:0}
+  .tabs .wrap{display:grid; gap:0; overflow:visible}
+  .tab{position:relative; display:flex; flex-direction:column; align-items:center; gap:2px; padding:7px 0 6px; font-size:10.5px; border-bottom:0; min-width:0}
+  .tab .tl{max-width:100%; overflow:hidden; text-overflow:ellipsis}
+  .ti{display:block; width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+  .tab[aria-selected="true"]{color:var(--accent)}
+  .tab[aria-selected="true"]::before{content:""; position:absolute; background:var(--accent); border-radius:3px}
+
+  main.wrap{max-width:none; margin:0; min-width:0; min-height:0; overflow-y:auto; padding-block:10px; display:flex; flex-direction:column}
+  .view{flex:1 1 auto; min-height:0; gap:8px}
+  .view-head{gap:6px; align-items:center; flex-wrap:nowrap}
+  .view-head .controls{width:100%; min-width:0; flex-wrap:nowrap}
+  .controls{gap:6px}
+  select{font-size:16px; padding:5px 8px; width:0; min-width:0; flex:1 1 0; border-radius:8px}
+  .seg{padding:2px; flex:none; border-radius:8px}
+  .seg button{padding:5px 9px; font-size:12.5px; white-space:nowrap}
+  .btn{padding:7px 12px; font-size:13.5px}
+
+  /* Tabelle */
+  .tbl-bar{gap:6px}
+  .legend{gap:4px}
+  .chip{font-size:11px; padding:3px 8px; gap:5px}
+  .chip::before{width:8px; height:8px}
+  .hidebar{padding:5px 10px; font-size:12px; gap:8px; justify-content:space-between}
+  .hidebar > span:first-child{display:none}
+  .hiding .legend{display:none}
+  .scroll{overflow:visible; padding:0; flex:1 1 auto; min-height:0}
+  .pse{min-width:0; height:100%; gap:1.5px; align-content:start}
+  .cell{padding:1px 2px; border-radius:3.5px; justify-content:center; gap:1px}
+  .cell .nm{display:none}
+  .cell .s{font-size:min(16px, 54cqi); line-height:1}
+  .pse.hide .cell:not(.rev)::after{font-size:min(14px, 50cqi)}
+  .gh,.ph{font-size:7.5px}
+  .gh{flex-direction:column; gap:0; line-height:1.05}
+  .fph{font-size:7px; border-radius:3.5px; overflow:hidden}
+  .detail{gap:10px}
+  .detail h3{font-size:15px; gap:6px}
+  .pill{font-size:9px; padding:3px 6px}
+  .detail dl{font-size:10.5px; gap:1px 10px}
+  .detail dd{font-size:10.5px}
+  .detail .tip{font-size:11px; line-height:1.35}
+  .detail .tile.md{width:72px; height:auto; padding:6px 7px}
+  .detail .tile .s{font-size:30px} .detail .tile .z,.detail .tile .nm{font-size:10px} .detail .tile .m{font-size:8.5px}
+  .answer.sm{max-width:none}
+  .answer.sm input{font-size:16px; padding:6px 10px}
+  .answer.sm .btn,.btn.sm{padding:6px 11px; font-size:13px}
+  .opt.sm{padding:5px 9px; font-size:13px}
+
+  /* Karteikarten */
+  .card{min-height:0; padding:14px 12px; gap:10px; border-radius:14px; overflow:auto}
+  .card-tag{top:10px; left:12px; font-size:10px}
+  .prompt-sym{font-size:min(96px, 22vh); font-size:min(96px, 22dvh)}
+  .prompt-name{font-size:min(38px, 9vh); font-size:min(38px, 9dvh); overflow-wrap:anywhere}
+  .prompt-z{font-size:min(84px, 20vh); font-size:min(84px, 20dvh)}
+  .q{font-size:13.5px}
+  .answer{max-width:340px}
+  .answer input{font-size:17px; padding:10px 12px}
+  .card .tile.xl{width:100px; height:124px; padding:8px 10px}
+  .card .tile.xl .s{font-size:46px} .card .tile.xl .nm{font-size:13px}
+  .facts{gap:4px} .facts li{font-size:11px; padding:3px 8px}
+  .merk-line{font-size:12.5px}
+  .verdict{font-size:24px}
+  .note,.yours{font-size:13px}
+  .hint{font-size:12.5px}
+  .card.wt{display:grid; grid-template-columns:auto minmax(0,1fr); grid-template-rows:minmax(0,1fr) auto auto minmax(0,1fr); column-gap:14px; row-gap:0; text-align:left; justify-items:start; align-items:center}
+  .card.wt > .tile{grid-area:1/1/5/2; margin:0}
+  .card.wt > .cb1{grid-area:2/2; display:flex; flex-direction:column; align-items:flex-start; gap:4px; margin-bottom:8px}
+  .card.wt > .cb2{grid-area:3/2; display:flex; flex-direction:column; align-items:flex-start; gap:8px}
+  .card.wt .facts,.card.wt .card-actions{justify-content:flex-start}
+  .side{gap:8px}
+  .panel{padding:8px 10px}
+  .panel h3{font-size:13px; margin-bottom:5px}
+  .bar{height:6px}
+  .sp-msg{font-size:11.5px; margin-top:3px; min-height:0}
+  .chipgrid{margin-top:6px; gap:3px; max-height:42px; overflow-y:auto}
+  .chipgrid span{width:auto; min-width:22px; height:19px; padding:0 2px; font-size:10px; border-radius:4px}
+  .levels{margin-top:6px; gap:8px; font-size:10px}
+  .stat-row{gap:12px}
+  .stat-row div{font-size:10px}
+  .stat-row b{font-size:17px}
+
+  /* Quiz */
+  .qwrap{min-height:0; flex:1 1 auto; padding:10px 12px; gap:10px; border-radius:14px; overflow:auto}
+  .qmeta{font-size:11.5px}
+  .dots{gap:3px} .dots i{width:12px; height:4px}
+  .opts{grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px}
+  .opt{padding:10px 12px; font-size:14.5px; border-radius:10px; gap:8px}
+  .opt span{min-width:0; overflow-wrap:anywhere}
+  .qgrid{gap:1.5px; max-width:100%}
+  .score{font-size:56px}
+  .wronglist{gap:6px}
+  .wronglist .tile.md{width:58px; height:72px; padding:4px 6px}
+  .wronglist .tile .s{font-size:22px} .wronglist .tile .z{font-size:9px}
+  .wronglist .tile .nm{font-size:8.5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .wronglist .tile .m{display:none}
+
+  /* Speedrun */
+  .sp-top{padding:8px 10px; gap:8px; grid-template-columns:minmax(0,1fr) auto}
+  .sp-top input{font-size:17px; padding:9px 12px}
+  .sp-top > .controls{flex-wrap:nowrap; gap:8px}
+  .timer{font-size:22px; text-align:right} .timer small{font-size:10.5px}
+  .result{padding:8px 12px; gap:10px}
+  .result b{font-size:20px}
+  #v-speedrun .scroll{display:flex; flex-direction:column}
+  .board{min-width:0; gap:1.5px; --bh:minmax(0,34px); --bgap:4px; flex:1 1 auto; min-height:0; align-content:start}
+  .bcell{padding:1px 2px; border-radius:3.5px; container-type:inline-size}
+  .bcell .z{font-size:min(8px, 34cqi)}
+  .bcell .s{font-size:min(15px, 54cqi)}
+
+  /* Merksätze */
+  #v-merksaetze .view-head p{font-size:12.5px; margin:0}
+  .callout{padding:8px 12px; font-size:12.5px; line-height:1.4}
+  .mnav{display:flex; gap:3px}
+  .mnav button{flex:1 1 0; min-width:0; appearance:none; border:1px solid var(--line); background:var(--surface); border-radius:7px; padding:7px 0; font:700 12px/1 var(--display); color:var(--muted); cursor:pointer}
+  .mnav button[aria-current="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+  .merk{grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:100%; gap:10px; overflow-x:auto; overflow-y:hidden; scroll-snap-type:x mandatory; scrollbar-width:none; overscroll-behavior-x:contain; flex:1 1 auto; min-height:0}
+  .merk::-webkit-scrollbar{display:none}
+  .mcard{scroll-snap-align:start; overflow-y:auto; justify-content:center; padding:16px; gap:14px}
+  .mchips span{min-width:40px; height:40px; font-size:17px}
+  .sentence{font-size:20px}
+}
+
+/* Hochformat */
+@media (orientation:portrait) and (max-width:700px){
+  body{grid-template-columns:minmax(0,1fr); grid-template-rows:auto minmax(0,1fr) auto}
+  body::after{content:""; position:fixed; inset:auto 0 0; height:env(safe-area-inset-bottom,0px); background:var(--surface)}
+  .top{grid-row:1} main.wrap{grid-row:2}
+  .tabs{grid-row:3; border-top:1px solid var(--line)}
+  .tabs .wrap{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .tab[aria-selected="true"]::before{top:0; left:28%; right:28%; height:2.5px; border-radius:0 0 3px 3px}
+
+  .pse{grid-template-columns:9px repeat(18,minmax(0,1fr)); grid-template-rows:16px repeat(7,minmax(0,36px)) 4px repeat(2,minmax(0,36px)) auto}
+  .cell{align-items:center}
+  .cell .z{font-size:6.5px}
+  .pse.hide .cell:not(.rev)::after{top:68%}
+  .detail{grid-row:12; grid-column:1 / -1; margin-top:8px; padding:8px 10px; min-height:118px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r)}
+  .legend{width:100%}
+
+  .learn{display:flex; flex-direction:column; gap:8px; flex:1 1 auto; min-height:0}
+  #v-karten .side{order:-1; display:grid; grid-template-columns:minmax(0,1fr) auto}
+  #v-karten .panel:nth-child(2) h3{display:none}
+  #v-karten .panel:nth-child(2) .stat-row{flex-direction:column; gap:4px}
+  .card{flex:1 1 auto}
+
+  #v-merksaetze .view-head > div:first-child{display:block}
+  #v-merksaetze h2{display:none}
+}
+
+/* Querformat */
+@media (orientation:landscape) and (max-height:520px), (orientation:landscape) and (max-width:700px){
+  body{grid-template-columns:auto minmax(0,1fr); grid-template-rows:auto minmax(0,1fr)}
+  .top{grid-column:1; grid-row:1; border-bottom:0; border-right:1px solid var(--line)}
+  .tabs{grid-column:1; grid-row:2; border-right:1px solid var(--line); overflow-y:auto; scrollbar-width:none}
+  main.wrap{grid-column:2; grid-row:1 / -1; padding-left:12px; padding-block:8px}
+  .top .wrap,.tabs .wrap{box-sizing:content-box; width:76px; padding-left:max(6px, env(safe-area-inset-left,0px)); padding-right:6px}
+  .brand{display:none}
+  .top-in{flex-direction:column; align-items:stretch; padding-block:8px 4px}
+  .prog{flex-direction:column; align-items:stretch; gap:6px}
+  .prog-nums{flex-direction:column; gap:2px}
+  .prog-nums > div{display:flex; align-items:baseline; gap:4px; font-size:9.5px}
+  .prog-nums b{display:inline; font-size:13px}
+  .resetMini{height:26px}
+  .tabs .wrap{grid-template-columns:minmax(0,1fr); padding-block:2px 6px}
+  .tab{padding:5px 0}
+  .ti{width:20px; height:20px}
+  .tab[aria-selected="true"]::before{left:-6px; top:22%; bottom:22%; width:2.5px; border-radius:0 3px 3px 0}
+
+  #v-tabelle{display:grid; grid-template-columns:auto minmax(0,1fr); grid-template-rows:auto minmax(0,1fr); gap:6px}
+  #v-tabelle .tbl-bar{grid-area:1/1/2/3; flex-wrap:nowrap; min-width:0}
+  #v-tabelle.hiding .tbl-bar{grid-column:1}
+  #v-tabelle .hidebar{grid-area:1/2/2/3}
+  #v-tabelle .scroll{grid-area:2/1/3/3}
+  .tbl-bar .controls{flex:none; flex-wrap:nowrap}
+  .legend{flex:1 1 auto; min-width:0; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none}
+  .chip{flex:none}
+  .pse{grid-template-columns:10px repeat(18,minmax(0,1fr)); grid-template-rows:11px repeat(7,minmax(0,1fr)) 3px repeat(2,minmax(0,1fr))}
+  .cell{align-items:flex-start}
+  .cell .z{font-size:7.5px}
+  .gh{flex-direction:row; gap:3px}
+  .detail{padding:2px 6px}
+  .detail h3{font-size:14px}
+  .detail dl{line-height:1.25; gap:0 10px}
+  .detail .tile.md{width:58px; padding:4px 6px}
+  .detail .tile .s{font-size:24px} .detail .tile .m{display:none}
+  .opt.sm span{display:none}
+
+  #v-karten{display:grid; grid-template-columns:minmax(0,1fr) 232px; grid-template-rows:auto minmax(0,1fr); gap:8px}
+  #v-karten .view-head{grid-area:1/2/2/3}
+  #v-karten .view-head .controls{flex-direction:column; align-items:stretch}
+  #v-karten .view-head select{width:auto; flex:none}
+  #v-karten .seg button{flex:1 1 0; padding-inline:4px}
+  #v-karten .learn{display:contents}
+  #v-karten .card{grid-area:1/1/3/2}
+  #v-karten .side{grid-area:2/2/3/3; min-height:0; overflow-y:auto; scrollbar-width:none}
+  .prompt-sym{font-size:min(84px, 22vh); font-size:min(84px, 22dvh)}
+
+  .qwrap{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.25fr); grid-template-rows:auto minmax(0,1fr) auto auto minmax(0,1fr); column-gap:18px; row-gap:6px; align-items:center; justify-items:center}
+  .qwrap > .qmeta{grid-area:1/1/2/3}
+  .qwrap > [class^="prompt-"]{grid-area:2/1; align-self:end}
+  .qwrap > .q{grid-area:3/1}
+  .qwrap > #qAfter{grid-area:4/1}
+  .qwrap > .opts,.qwrap > .qgrid{grid-area:2/2/6/3}
+  .qwrap > .summary,.qwrap > .empty{grid-area:1/1/6/3}
+  .summary{display:grid; grid-template-columns:auto minmax(0,1fr); column-gap:24px; row-gap:8px; align-items:center; justify-items:center}
+  .summary .score{grid-area:1/1/2/2; font-size:48px}
+  .summary > .q{grid-area:2/1/4/2; align-self:start; max-width:22ch}
+  .summary .lbl{grid-area:1/2}
+  .summary .wronglist{grid-area:2/2}
+  .summary .card-actions{grid-area:3/2}
+
+  #v-speedrun{display:grid; grid-template-columns:auto minmax(0,1fr); grid-template-rows:auto auto minmax(0,1fr); gap:6px 8px}
+  #v-speedrun > .view-head{grid-area:1/1/2/2}
+  #v-speedrun .view-head select{width:auto; flex:none; max-width:210px}
+  #v-speedrun > div:nth-child(2){grid-area:1/2/2/3; min-width:0}
+  #v-speedrun > .result{grid-area:2/1/3/3}
+  #v-speedrun > .scroll{grid-area:3/1/4/3}
+  .sp-top{padding:6px 8px}
+
+  #v-merksaetze .view-head{display:none}
+  .merk{grid-auto-columns:calc((100% - 10px) / 2)}
+  .mcard{padding:12px 14px; gap:10px}
+  .mchips span{min-width:34px; height:34px; font-size:15px}
+  .sentence{font-size:16.5px}
+}
 @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
 </style>
 </head>
@@ -274,17 +528,18 @@ footer{padding-block:20px 36px; color:var(--muted); font-size:13px; display:flex
         <div class="k" style="--k:var(--p-1)"><b id="nNew">118</b>neu</div>
       </div>
       <div class="mini" id="mini" aria-label="Lernstand als Mini-Periodensystem"></div>
+      <button class="resetMini" id="resetMini" type="button" title="Fortschritt zurücksetzen" aria-label="Fortschritt zurücksetzen">↺</button>
     </div>
   </div>
 </header>
 
 <nav class="tabs" aria-label="Bereiche">
   <div class="wrap" role="tablist">
-    <a class="tab" href="#tabelle" data-v="tabelle" role="tab">Tabelle</a>
-    <a class="tab" href="#karten" data-v="karten" role="tab">Karteikarten</a>
-    <a class="tab" href="#quiz" data-v="quiz" role="tab">Quiz</a>
-    <a class="tab" href="#speedrun" data-v="speedrun" role="tab">Speedrun</a>
-    <a class="tab" href="#merksaetze" data-v="merksaetze" role="tab">Merksätze</a>
+    <a class="tab" href="#tabelle" data-v="tabelle" role="tab"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="4" height="4" rx="1"/><rect x="17" y="4" width="4" height="4" rx="1"/><rect x="3" y="10" width="4" height="4" rx="1"/><rect x="12" y="10" width="9" height="4" rx="1"/><rect x="3" y="16" width="18" height="4" rx="1"/></svg><span class="tl">Tabelle</span></a>
+    <a class="tab" href="#karten" data-v="karten" role="tab"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="12" height="14" rx="2"/><path d="M8 3.5h9.5a2.5 2.5 0 0 1 2.5 2.5v11"/></svg><span class="tl"><span class="full">Karteikarten</span><span class="short">Karten</span></span></a>
+    <a class="tab" href="#quiz" data-v="quiz" role="tab"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.4c-.6.3-1 .8-1 1.5v.5"/><path d="M12 17h.01"/></svg><span class="tl">Quiz</span></a>
+    <a class="tab" href="#speedrun" data-v="speedrun" role="tab"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 13.5V10M10 2.8h4M18.3 6.4l1.4-1.4"/></svg><span class="tl">Speedrun</span></a>
+    <a class="tab" href="#merksaetze" data-v="merksaetze" role="tab"><svg class="ti" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.2 17.5h5.6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.6.5.9 1.1.9 1.8v.4h5.4v-.4c0-.7.3-1.3.9-1.8A6 6 0 0 0 12 3z"/></svg><span class="tl">Merksätze</span></a>
   </div>
 </nav>
 
@@ -300,8 +555,8 @@ footer{padding-block:20px 36px; color:var(--muted); font-size:13px; display:flex
     <div class="tbl-bar">
       <div class="controls">
         <span class="lbl">Farben</span>
-        <div class="seg" id="colorSeg"><button data-m="cat" aria-pressed="true">Elementgruppe</button><button data-m="prog" aria-pressed="false">Mein Lernstand</button></div>
-        <div class="seg"><button id="hideBtn" aria-pressed="false">Alles verdecken</button></div>
+        <div class="seg" id="colorSeg"><button data-m="cat" aria-pressed="true"><span class="full">Elementgruppe</span><span class="short">Gruppe</span></button><button data-m="prog" aria-pressed="false"><span class="full">Mein Lernstand</span><span class="short">Lernstand</span></button></div>
+        <div class="seg"><button id="hideBtn" aria-pressed="false"><span class="full">Alles verdecken</span><span class="short">Verdecken</span></button></div>
       </div>
       <div class="legend" id="legend"></div>
     </div>
@@ -315,7 +570,7 @@ footer{padding-block:20px 36px; color:var(--muted); font-size:13px; display:flex
       <div><h2>Karteikarten</h2><p>Neue Elemente kommen einzeln dazu. Was du falsch hast, kommt bald wieder. Nach 3 richtigen Antworten gilt ein Element als sicher.</p></div>
       <div class="controls">
         <select id="packSel" aria-label="Lernpaket"></select>
-        <div class="seg" id="dirSeg"><button data-d="s2n">Symbol → Name</button><button data-d="n2s">Name → Symbol</button><button data-d="z2e">Zahl → Element</button></div>
+        <div class="seg" id="dirSeg"><button data-d="s2n"><span class="full">Symbol → Name</span><span class="short">Fe→Eisen</span></button><button data-d="n2s"><span class="full">Name → Symbol</span><span class="short">Eisen→Fe</span></button><button data-d="z2e"><span class="full">Zahl → Element</span><span class="short">26→Fe</span></button></div>
       </div>
     </div>
     <div class="learn">
@@ -376,6 +631,7 @@ footer{padding-block:20px 36px; color:var(--muted); font-size:13px; display:flex
       <div><h2>Merksätze</h2><p>Jedes Wort steht für ein Element, von oben nach unten. Die farbigen Buchstaben ergeben das Symbol.</p></div>
     </div>
     <div class="callout"><b>So geht’s am schnellsten:</b> Lies einen Satz dreimal laut, sag dann die Elemente ohne hinzuschauen auf und üb das Paket gleich mit den Karteikarten.</div>
+    <div class="mnav" id="mnav" aria-label="Merksatz wählen"></div>
     <div class="merk" id="merk"></div>
   </section>
 
@@ -518,7 +774,7 @@ function showOpts(e,typed){
     hideRes.set(e.z,'miss');updateCell(e.z);renderHideStats();
     $('#hidLead').className='tip '+(pick===e.z?'good':'bad');
     $('#hidLead').textContent=pick===e.z?`Genau, das ist ${e.sym} (${e.name}).`:`Nicht ganz. Es ist ${e.sym} (${e.name}).`;
-    box.insertAdjacentHTML('beforeend',`<div class="hrow" style="margin-top:6px"><button class="btn primary sm" type="button" id="hidNext">Nächstes Element</button></div>`);
+    box.querySelector('.hrow').insertAdjacentHTML('beforeend',`<button class="btn primary sm" type="button" id="hidNext">Nächstes Element</button>`);
     $('#hidNext').onclick=()=>goNext(e.z);$('#hidNext').focus({preventScroll:true});
   };
 }
@@ -578,7 +834,7 @@ $('#pse').addEventListener('mouseover',ev=>{
 $('#pse').addEventListener('mouseleave',()=>{if(!catFilter)$('#pse').classList.remove('dimming')});
 $('#legend').addEventListener('click',ev=>{const b=ev.target.closest('.chip');if(!b)return;catFilter=catFilter===b.dataset.c?null:b.dataset.c;renderLegend();applyDim()});
 $('#colorSeg').addEventListener('click',ev=>{const b=ev.target.closest('button');if(!b)return;state.color=b.dataset.m;saveState();syncSeg('#colorSeg','m',state.color);renderTable()});
-$('#hideBtn').addEventListener('click',()=>{hidden=!hidden;hideRes.clear();if(hidden)selZ=1;$('#hideBtn').setAttribute('aria-pressed',hidden);$('#hideMsg').hidden=!hidden;renderHideStats();renderTable()});
+$('#hideBtn').addEventListener('click',()=>{hidden=!hidden;hideRes.clear();$('#v-tabelle').classList.toggle('hiding',hidden);if(hidden)selZ=1;$('#hideBtn').setAttribute('aria-pressed',hidden);$('#hideMsg').hidden=!hidden;renderHideStats();renderTable()});
 $('#hideReset').addEventListener('click',()=>{hideRes.clear();selZ=1;renderHideStats();renderTable()});
 function syncSeg(sel,key,val){document.querySelectorAll(sel+' button').forEach(b=>b.setAttribute('aria-pressed',b.dataset[key]===val))}
 
@@ -599,7 +855,7 @@ function pickCard(pool){
 }
 function fcNext(){
   const pool=EL.filter(packById(state.pack).f);
-  if(!pool.length){$('#card').innerHTML=`<p class="empty">Hier ist noch nichts drin. Schwachstellen tauchen auf, sobald du bei Karteikarten oder im Quiz etwas falsch hast.</p><button class="btn primary" id="toFirst">Mit Element 1–20 starten</button>`;$('#toFirst').onclick=()=>{state.pack='1-20';saveState();$('#packSel').value='1-20';renderPackPanel();fcNext()};return}
+  if(!pool.length){$('#card').classList.remove('wt');$('#card').innerHTML=`<p class="empty">Hier ist noch nichts drin. Schwachstellen tauchen auf, sobald du bei Karteikarten oder im Quiz etwas falsch hast.</p><button class="btn primary" id="toFirst">Mit Element 1–20 starten</button>`;$('#toFirst').onclick=()=>{state.pack='1-20';saveState();$('#packSel').value='1-20';renderPackPanel();fcNext()};return}
   const r=pickCard(pool);
   fc.el=r.el;fc.phase=r.intro?'intro':'ask';fc.hinted=false;fc.lastIntro=r.intro;fc.answer='';
   fc.last=[r.el.z,...fc.last].slice(0,Math.min(2,pool.length-1));
@@ -612,9 +868,9 @@ function factsHTML(e){
   ${m?`<p class="merk-line">${sentenceHTML(m.s)}</p>`:''}`;
 }
 function renderCard(){
-  const e=fc.el,d=state.dir,box=$('#card');
+  const e=fc.el,d=state.dir,box=$('#card');box.classList.toggle('wt',fc.phase!=='ask');
   if(fc.phase==='intro'){
-    box.innerHTML=`<div class="card-tag new">Neues Element</div>${tileHTML(e,'xl')}<p class="q">Präg dir Symbol, Name und Ordnungszahl ein.</p>${factsHTML(e)}<div class="card-actions"><button class="btn primary" id="fcGot">Gemerkt, weiter</button></div>`;
+    box.innerHTML=`<div class="card-tag new">Neues Element</div>${tileHTML(e,'xl')}<div class="cbody cb2"><p class="q">Präg dir Symbol, Name und Ordnungszahl ein.</p>${factsHTML(e)}<div class="card-actions"><button class="btn primary" id="fcGot">Gemerkt, weiter</button></div></div>`;
     $('#fcGot').onclick=()=>{introduce(e.z);fcNext()};$('#fcGot').focus({preventScroll:true});return;
   }
   if(fc.phase==='ask'){
@@ -633,11 +889,11 @@ function renderCard(){
   const r=fc.res;
   const other=!r.ok&&fc.answer?findEl(fc.answer):null;
   const otherTxt=other&&other.z!==e.z?` · das wäre ${esc(other.name)} (${other.sym}, Nr. ${other.z})`:'';
-  box.innerHTML=`<div class="verdict ${r.ok?'good':'bad'}">${r.ok?'Richtig':fc.answer?'Leider falsch':'Kein Problem, so ist es:'}</div>
+  box.innerHTML=`<div class="cbody cb1"><div class="verdict ${r.ok?'good':'bad'}">${r.ok?'Richtig':fc.answer?'Leider falsch':'Kein Problem, so ist es:'}</div>
     ${!r.ok&&fc.answer?`<p class="yours">Deine Antwort: <s>${esc(fc.answer)}</s>${otherTxt}</p>`:''}
-    ${r.note?`<p class="note">${esc(r.note)}</p>`:''}
-    ${tileHTML(e,'xl')}${factsHTML(e)}
-    <div class="card-actions"><button class="btn primary" id="fcNextBtn">Weiter</button></div>`;
+    ${r.note?`<p class="note">${esc(r.note)}</p>`:''}</div>
+    ${tileHTML(e,'xl')}<div class="cbody cb2">${factsHTML(e)}
+    <div class="card-actions"><button class="btn primary" id="fcNextBtn">Weiter</button></div></div>`;
   $('#fcNextBtn').onclick=fcNext;$('#fcNextBtn').focus({preventScroll:true});
 }
 function checkAnswer(e,d,raw){
@@ -754,7 +1010,7 @@ function renderBoard(){
   const els=sp.els,main=els.filter(e=>!e.f),hasF=els.some(e=>e.f);
   const rows=Math.max(...main.map(e=>e.row),0);
   const b=$('#board');
-  b.style.gridTemplateRows=`repeat(${rows},44px)`+(hasF?' 10px repeat(2,44px)':'');
+  b.style.gridTemplateRows=`repeat(${rows},var(--bh))`+(hasF?' var(--bgap) repeat(2,var(--bh))':'');
   b.innerHTML=els.map(e=>{const r=e.f?rows+(e.row-7):e.row;return `<div class="bcell" data-bz="${e.z}" style="grid-row:${r};grid-column:${e.col};--c:var(--c-${e.cat})"><span class="z">${e.z}</span><span class="s"></span></div>`}).join('');
 }
 function spStart(){
@@ -809,7 +1065,19 @@ function renderMerk(){
     <div class="mchips">${m.syms.split(' ').map(s=>`<span style="--c:var(--c-${BYSYM[s].cat})" title="${esc(BYSYM[s].name)}">${s}</span>`).join('')}</div>
     <p class="sentence">${sentenceHTML(m.s)}</p>
     <button class="btn" data-pack="${m.id}">Diese Gruppe üben</button></article>`).join('');
+  $('#mnav').innerHTML=MERK.map((m,i)=>`<button type="button" data-i="${i}" title="${esc(m.t)}" aria-label="${esc(m.t)}">${MK[m.id]}</button>`).join('');
 }
+const MK={g1:'I',g2:'II',g13:'III',g14:'IV',g15:'V',g16:'VI',g17:'VII',g18:'VIII',p2:'P2',p3:'P3',d4:'NG'};
+function syncMnav(){
+  const m=$('#merk'),c=m.children;if(c.length<2)return;
+  const step=c[1].offsetLeft-c[0].offsetLeft;if(step<=0)return;
+  const vis=Math.max(1,Math.round((m.clientWidth+10)/step));
+  const i=Math.min(Math.round(m.scrollLeft/step),c.length-vis);
+  $('#mnav').querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-current',j>=i&&j<i+vis?'true':'false'));
+}
+$('#mnav').addEventListener('click',ev=>{const b=ev.target.closest('button');if(!b)return;const m=$('#merk'),c=m.children;m.scrollTo({left:c[+b.dataset.i].offsetLeft-c[0].offsetLeft,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})});
+$('#merk').addEventListener('scroll',()=>requestAnimationFrame(syncMnav),{passive:true});
+addEventListener('resize',()=>{if(!$('#v-merksaetze').hidden)syncMnav()});
 $('#merk').addEventListener('click',ev=>{const b=ev.target.closest('[data-pack]');if(!b)return;state.pack=b.dataset.pack;saveState();fc.last=[];location.hash='karten'});
 
 /* ===== ROUTING ===== */
@@ -823,18 +1091,22 @@ function route(){
   if(v==='karten'){$('#packSel').value=state.pack;renderPackPanel();fcNext();renderSession()}
   if(v==='quiz'){$('#quizPack').value=state.pack;quizStart()}
   if(v==='speedrun')spSetup();
+  if(v==='merksaetze')requestAnimationFrame(syncMnav);
   window.scrollTo({top:0});
 }
 window.addEventListener('hashchange',route);
 
 /* reset */
-let resetArm=null;
-$('#resetBtn').onclick=()=>{
-  const b=$('#resetBtn');
-  if(!resetArm){b.textContent='Wirklich alles löschen? Nochmal tippen';b.classList.add('danger');resetArm=setTimeout(()=>{resetArm=null;b.textContent='Fortschritt zurücksetzen';b.classList.remove('danger')},4000);return}
-  clearTimeout(resetArm);resetArm=null;boxes={};saveBoxes();b.textContent='Zurückgesetzt';b.classList.remove('danger');
-  setTimeout(()=>b.textContent='Fortschritt zurücksetzen',1800);refreshProgress();route();
-};
+function armReset(b,idle,armed,done){
+  let t=null;
+  b.onclick=()=>{
+    if(!t){b.textContent=armed;b.classList.add('danger');t=setTimeout(()=>{t=null;b.textContent=idle;b.classList.remove('danger')},4000);return}
+    clearTimeout(t);t=null;boxes={};saveBoxes();b.textContent=done;b.classList.remove('danger');
+    setTimeout(()=>b.textContent=idle,1800);refreshProgress();route();
+  };
+}
+armReset($('#resetBtn'),'Fortschritt zurücksetzen','Wirklich alles löschen? Nochmal tippen','Zurückgesetzt');
+armReset($('#resetMini'),'↺','Löschen?','✓');
 
 /* init */
 fillPackSelect($('#packSel'),state.pack);fillPackSelect($('#quizPack'),state.pack);
